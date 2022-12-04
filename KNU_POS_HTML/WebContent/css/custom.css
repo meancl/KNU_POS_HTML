@@ -1,0 +1,32 @@
+/* @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+.navbar-brand, h1, h2, h3, h4 {
+	font-family: 'Jeju Gothic';
+}
+h5{
+	font-family: 'Jeju Gothic';
+	font-size: 18px;
+} */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap');
+
+body {
+	font-family: 'Noto Sans SC', sans-serif;
+	font-size: 18px;
+	/* font-family: 'Jeju Gothic'; */
+	background-image: '../img/knu3.jpg';
+}
+table {
+	width: 100%;
+	height: 80%;
+	border: none;
+}
+section {
+	background-image: '../img/knu3.jpg';
+}
+
+#input-file-button{
+  padding: 6px 25px;
+  background-color:#FF6600;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
