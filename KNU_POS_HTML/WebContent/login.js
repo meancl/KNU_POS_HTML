@@ -16,18 +16,16 @@ function loginRequest() {
     }).then((response) => response.json())
         .then(response => {
             console.log(response);
-            if(response?.login)
-            {
+            if (response?.login) {
                 redirectByUserAuth(response.branchId);
-            } 
-            else
-            {
+            }
+            else {
                 alert('로그인 정보가 없습니다');
             }
-             })
-        .catch((error) => console.log('loginRequest() error : ' + error)); 
+        })
+        .catch((error) => console.log('loginRequest() error : ' + error));
 
-        
+
 
 }
 
@@ -37,13 +35,13 @@ function loginRequest() {
 // isLogin이 들어온다면 관리자로 가는 분기문도 생성가능
 // branchId != null ?  
 function redirectByUserAuth(branchId) {
-    if (branchId)
-    {
+    if (branchId) {
         localStorage.setItem('branchId', branchId);
         window.location.replace('http://localhost:5501/WebContent/menu.html');
     }
-    else
+    else {
         window.location.replace('http://localhost:5501/WebContent/main.html');
+    }
 }
 
 
@@ -71,29 +69,27 @@ function registerRequest() {
             email: regMail,
             password: regPw,
             role: regAuth,
-            branchName : regBranchName 
+            branchName: regBranchName
 
         }),
     })
         .then(response => response.json())
         .then((response) => {
             document.getElementById("regBranchName").value = "";
-            document.getElementById("regPw").value = ""; 
-            document.getElementById("regAuth").value = ""; 
-            document.getElementById("regMail").value = ""; 
-            document.getElementById("regName").value = ""; 
-            doAfterCreateTable(response);})
-        .catch((error) => console.log('registerRequest() error : ' + error)); 
+            document.getElementById("regPw").value = "";
+            document.getElementById("regAuth").value = "";
+            document.getElementById("regMail").value = "";
+            document.getElementById("regName").value = "";
+            doAfterCreateTable(response);
+        })
+        .catch((error) => console.log('registerRequest() error : ' + error));
 }
 
-function doAfterCreateTable(response)
-{
-    if(response)
-    {
+function doAfterCreateTable(response) {
+    if (response) {
         alert('Success');
     }
-    else
-    {
+    else {
         alert('Fail');
     }
 }

@@ -27,8 +27,7 @@ if (outPut != null) {
 //const basket = {}; // 주문 정보를 담고있는 딕셔너리
 
 
-function parseNumberAndPrice(str)
-{
+function parseNumberAndPrice(str) {
     return str.substring(0, str.indexOf('('));
 }
 
@@ -41,17 +40,21 @@ function menu_click(menuName) {
 
     // tabel menu의 table에  열 값 추가
     //alert(menu[0].trim());
-    try {
 
-        let menu_name = menu[0].trim();
-        let number = Number(parseNumberAndPrice(menu[1]));
-        let price = Number(parseNumberAndPrice(menu[2]));
 
-        if (basket.hasOwnProperty(menu_name)) // 이미 클릭했었다면
+    let menu_name = menu[0].trim();
+    let number = Number(parseNumberAndPrice(menu[1]));
+    let price = Number(parseNumberAndPrice(menu[2]));
+
+    if (number == 0) // 상품이 없어
+    {
+        alert(menu_name + "상품은 매진됐습니다.");
+    }
+    else {
+        if (basket.hasOwnProperty(menu_name)) // 데이터가 있다면
         {
             if (basket[menu_name].num >= inventoryDict[menu_name].quant) {
-                
-            basketTotalPrice -= price; 
+                basketTotalPrice -= price;
                 alert(menu_name + "상품은 더 이상 선택할 수 없습니다.");
             }
             else {
@@ -63,7 +66,7 @@ function menu_click(menuName) {
                 };
             }
         }
-        else // 처음 클릭한거라면
+        else // 처음 클릭한거라면 ( 매진 대비 )
         {
             basketId++;
             basket[menu_name] = {
@@ -72,24 +75,17 @@ function menu_click(menuName) {
                 price: price,
                 id: inventoryDict[menu_name].catalogId
             };
+
         }
+
         basketTotalPrice += price;
-    }
-    catch (e) {
-        alert(e);
     }
     document.getElementById("menuTable").innerHTML = "";
     updateTable();
 
-    // //menu_list에 값 저장
-    // menuList.push({ 'order': order, 'menuName': menu[0], 'count': '1', 'price': menu[1] })
-
-    // //menu_list 값을 localStorage에 저장
-    // order++;
-    // totalPriceview.value = sum;
-    // localStorage.setItem(tableName, JSON.stringify(menuList));
-
 }
+
+
 // 테이블을 업데이트해준다.
 function updateTable() {
 
@@ -115,7 +111,7 @@ function reset() {
     document.getElementById("menuTable").innerHTML = "";
     document.getElementById("sum").innerText = "";
     basketTotalPrice = 0;
-    basket ={};
+    basket = {};
     // sum = 0;
     // localStorage.removeItem(tableName);
 }
@@ -125,7 +121,7 @@ function reset() {
 function complete() {
 
     orderRequest();
-    
+
     reset();
 
     // let tableAreaName = tableName + "List";
@@ -137,14 +133,12 @@ function complete() {
 }
 
 // basket 구조에서 catalouge id와 quantity만 추출한다.
-function extractOrderDetails()
-{
+function extractOrderDetails() {
     let orderDetails = [];
-    for( let r in basket)
-    {
+    for (let r in basket) {
         orderDetails.push({
-            catalogueId : basket[r].id,
-            quantity : basket[r].num
+            catalogueId: basket[r].id,
+            quantity: basket[r].num
         });
     }
     return orderDetails;
@@ -152,32 +146,34 @@ function extractOrderDetails()
 
 // 백엔드 api에 주문요청
 function orderRequest() {
-    
-    let orderDetails = extractOrderDetails(basket);
 
-    const stock = fetch(
-        `http://localhost:8080/api/v1/payment/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            branchId : branchId, 
-            orderDetails : orderDetails
-        })
+    let orderDetails = extractOrderDetails(basket);
+    if (Object.keys(basket).length == 0) {
+        alert("주문한 상품이 존재하지 않습니다.");
+    }
+    else {
+        const stock = fetch(
+            `http://localhost:8080/api/v1/payment/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                branchId: branchId,
+                orderDetails: orderDetails
+            })
         }).then((response) => response.json())
-        .then(response => {
-            if(response?.totalPrice)
-            {
-                alert('주문 정상확인됐습니다.');
-                updateInventories();
-            } 
-            else
-            {
-                alert('주문에 실패하였습니다.');
-            }
-        })
-        .catch((error) => console.log('orderRequest() error : ' + error)); 
+            .then(response => {
+                if (response?.totalPrice) {
+                    alert('주문 정상확인됐습니다.');
+                    updateInventories();
+                }
+                else {
+                    alert('주문에 실패하였습니다.');
+                }
+            })
+            .catch((error) => console.log('orderRequest() error : ' + error));
+    }
 }
 
 // 재고를 출력해오는 펑션
@@ -186,7 +182,7 @@ function printInventories() {
 
     let inventories = document.getElementById("inventories");
     inventories.innerHTML = ""; // 초기화
-    let count =0;
+    let count = 0;
     for (let inventoryName in inventoryDict) {
         inventories.innerHTML += `
         <div class="col-md-6 col-lg-3" style="padding : 10px 10px">
@@ -218,13 +214,12 @@ function updateInventories() {
     const stock = fetch(
         `http://localhost:8080/api/v1/branch/${branchId}/inventories`)
         .then((response) => response.json())
-        .then(response=> { 
-            for (let i = 0; i < response.length ; i++)
-            {
-                inventoryDict[response[i].name] = { 
-                    catalogId :response[i].catalogueId,
-                    price :response[i].price,
-                    quant :response[i].stock 
+        .then(response => {
+            for (let i = 0; i < response.length; i++) {
+                inventoryDict[response[i].name] = {
+                    catalogId: response[i].catalogueId,
+                    price: response[i].price,
+                    quant: response[i].stock
                 };
             }
             printInventories();
@@ -233,7 +228,7 @@ function updateInventories() {
 }
 
 function init() {
-    branchId =  Number(localStorage.getItem('branchId'));
+    branchId = Number(localStorage.getItem('branchId'));
     document.getElementById('storeId').innerText = branchId + '번 매장';
     updateInventories();
 }

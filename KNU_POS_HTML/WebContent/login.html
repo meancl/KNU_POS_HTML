@@ -16,7 +16,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 	<nav class="navbar navbbar-expand-lg navbar-dark bg-dark">
-	<a href="index.html"><img src="./img/logo5.png" "></a>
+	<a href="login.html"><img src="./img/logo5.png" "></a>
 	</nav>
 	<section>
  	<div class="container-fluid ps-md-0 h-50">
@@ -31,7 +31,7 @@
 	
 	              <!-- Sign In Form -->
 	                <div class="form-group mb-3">
-	                  <i class="fa-solid fa-user m-1"></i><label class="mb-1">ID</label>
+	                  <i class="fa-solid fa-user m-1"></i><label class="mb-1">E-MAIL</label>
 	                  <input type="text" class="form-control"  id ="loginId" name="user_id" id="floatingInput" required>
 	                </div>
 	                <div class="form-group mb-3">
@@ -40,11 +40,8 @@
 	                </div>
 	
 	                <div class="d-grid mt-5">
-	                  <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit" onclick="loginRequest()">LOGIN</button>
-	                  <a class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" data-toggle="modal" href="#newRegisterModal">NEW CREATE</a>
-	                  <div class="text-center">
-	                    <a class="small mt-5" href="#">Forgot password?</a>
-	                  </div>
+	                  <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit" onclick="loginRequest()">로그인</button>
+	                  <a class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" data-toggle="modal" href="#newRegisterModal">회원가입</a>
 	                </div>
 	            </div>
 	          </div>
@@ -65,12 +62,6 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div>
-						<div class="form-group col-sm-6">
-							<label>개인정보이용동의</label>
-							<textarea class="form-control" name="evaluationContent" placeholder="개인정보를 어쩌구 이러쿵" readonly maxlength="204"></textarea>
-						</div>
-					</div>
 					<div>
 						<div class="form-group col-sm-6">
 							<i class="fa-solid fa-user m-1" ></i><label class="mb-1">성함</label>
