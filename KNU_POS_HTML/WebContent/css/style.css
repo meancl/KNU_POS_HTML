@@ -1,0 +1,12 @@
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 50px 100px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 26px;
+    margin : 10px 20px;
+    height : 20px;
+    width : 400px;  
+  }

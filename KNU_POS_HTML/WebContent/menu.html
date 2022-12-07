@@ -49,7 +49,7 @@
                      <div class="user_profle_side">
                         <div class="user_img"><img class="img-responsive" src="img/knu3.jpg" alt="#" /></div>
                         <div class="user_info">
-                           <h6>매장명</h6>
+                           <h6 id="storeId">매장명</h6>
                            <p><span class="online_animation"></span> Online</p>
                         </div>
                      </div>
@@ -71,8 +71,8 @@
 			            </table>
 			        </div>
 			        <div>
-			            <input type="text" id="sum"> 총 가격</input>
-			            <button id="btn_com" style="width: 100px;" onclick="complete()">주문 완료</button>
+                  총 가격<label id="sum"> </label>
+			            <br><button id="btn_com" style="width: 100px;" onclick="complete()">주문 완료</button>
 			            <button id="btn_reset" style="width: 100px;" onclick="reset()">주문 초기화</button>
 			        </div>
 			    </div>
@@ -96,6 +96,7 @@
                                  <li>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="img/knu3.jpg" alt="#" /><span class="name_user">name</span></a>
                                     <div class="dropdown-menu">
+                                       <a class="dropdown-item" href="PaymentView.html">PaymentView</a>
                                        <a class="dropdown-item" href="main.html">Back</a>
                                        <a class="dropdown-item" href="index.html"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
@@ -117,7 +118,7 @@
                            </div>
                         </div>
                      </div>
-                     <div class="row column1">
+                     <div class="row column1" id = 'inventories'>
                         <div class="col-md-6 col-lg-3">
                         <button class="button" id="so" onclick="menu_click(this.id)">
                            <div class="full counter_section margin_bottom_30">
@@ -129,7 +130,8 @@
                               <div class="counter_no">
                                  <div class="Right">
                                     <p class="total_no">소라빵</p>
-                                    <p class="head_couter">￦2500</p>
+                                    <p> 2(개)</p>
+                                    <p class="head_couter">2500(원)</p>
                                  </div>
                               </div>
                            </div>
@@ -146,7 +148,8 @@
                               <div class="counter_no">
                                  <div>
                                     <p class="total_no">크림빵</p>
-                                    <p class="head_couter">￦1800</p>
+                                    <p> 2(개)</p>
+                                    <p class="head_couter">1800원</p>
                                  </div>
                               </div>
                            </div>
@@ -163,7 +166,8 @@
                               <div class="counter_no">
                                  <div>
                                     <p class="total_no">단팥빵</p>
-                                    <p class="head_couter">￦1500</p>
+                                    <p> 2(개)</p>
+                                    <p class="head_couter">1500원</p>
                                  </div>
                               </div>
                            </div>
@@ -181,12 +185,14 @@
                               <div class="counter_no">
                                  <div>
                                     <p class="total_no">바게트빵</p>
-                                    <p class="head_couter">￦5000</p>
+                                    <p> 2(개)</p>
+                                    <p class="head_couter">5000(원)</p>
                                  </div>
                               </div>
                            </div>
                         </button>
                         </div>
+
 
                      </div>
                      </div>
@@ -228,6 +234,13 @@
       <!-- custom js -->
       <script src="js2/custom.js"></script>
       <script src="js2/chart_custom_style1.js"></script>
-      
+      <script>
+         let inventoryDict = {};
+         let basket = {};
+         let basketId = 0;
+         let basketTotalPrice = 0;
+         let branchId ;
+         </script>
+         <body onload="init();"></body>
    </body>
 </html>
