@@ -16,8 +16,8 @@ function loginRequest() {
     }).then((response) => response.json())
         .then(response => {
             console.log(response);
-            if (response?.login) {
-                redirectByUserAuth(response.branchId);
+            if (response?.id) {
+                redirectToMenu(response.branch.id);
             }
             else {
                 alert('로그인 정보가 없습니다');
@@ -34,14 +34,16 @@ function loginRequest() {
 // 현재인자 branchId
 // isLogin이 들어온다면 관리자로 가는 분기문도 생성가능
 // branchId != null ?  
-function redirectByUserAuth(branchId) {
-    if (branchId) {
-        localStorage.setItem('branchId', branchId);
-        window.location.replace('http://localhost:5501/WebContent/menu.html');
-    }
-    else {
-        window.location.replace('http://localhost:5501/WebContent/admin.html');
-    }
+function redirectToMenu(branchId) {
+    
+    //let pathChunk = window.location.pathname.split('/');
+    //let newUrl = "";
+    //for (let i = 0; i < pathChunk.length -1; i++) {
+    //    newUrl += pathChunk[i] + '/';
+    //}
+    localStorage.setItem('branchId', branchId);
+    window.location.replace(`menu.html`);
+
 }
 
 
@@ -53,7 +55,7 @@ function registerRequest() {
     let regName = document.getElementById("regName").value;
     let regMail = document.getElementById("regMail").value;
     let regPw = document.getElementById("regPw").value;
-    let regAuth = document.getElementById("regAuth").value;
+    //let regAuth = document.getElementById("regAuth").value;
     let regBranchName = document.getElementById("regBranchName").value;
 
 
@@ -68,7 +70,7 @@ function registerRequest() {
             name: regName,
             email: regMail,
             password: regPw,
-            role: regAuth,
+            role: 'OWNER',
             branchName: regBranchName
 
         }),
@@ -78,12 +80,12 @@ function registerRequest() {
             console.log(response);
             document.getElementById("regBranchName").value = "";
             document.getElementById("regPw").value = "";
-            document.getElementById("regAuth").value = "";
+            // document.getElementById("regAuth").value = "";
             document.getElementById("regMail").value = "";
             document.getElementById("regName").value = "";
             doAfterCreateTable(response);
         })
-        .catch((error) => { 
+        .catch((error) => {
             console.log('registerRequest() error : ' + error);
         });
 }
