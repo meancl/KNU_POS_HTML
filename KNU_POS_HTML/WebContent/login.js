@@ -40,7 +40,7 @@ function redirectByUserAuth(branchId) {
         window.location.replace('http://localhost:5501/WebContent/menu.html');
     }
     else {
-        window.location.replace('http://localhost:5501/WebContent/main.html');
+        window.location.replace('http://localhost:5501/WebContent/admin.html');
     }
 }
 
@@ -75,6 +75,7 @@ function registerRequest() {
     })
         .then(response => response.json())
         .then((response) => {
+            console.log(response);
             document.getElementById("regBranchName").value = "";
             document.getElementById("regPw").value = "";
             document.getElementById("regAuth").value = "";
@@ -82,11 +83,13 @@ function registerRequest() {
             document.getElementById("regName").value = "";
             doAfterCreateTable(response);
         })
-        .catch((error) => console.log('registerRequest() error : ' + error));
+        .catch((error) => { 
+            console.log('registerRequest() error : ' + error);
+        });
 }
 
 function doAfterCreateTable(response) {
-    if (response) {
+    if (response?.id) {
         alert('Success');
     }
     else {
